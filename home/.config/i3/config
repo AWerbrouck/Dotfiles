@@ -8,19 +8,19 @@
 #                                          #                                       
 ############################################                                       
 
-#SEE EXTRA DOCUMENTATION BELOW
+#SEE EXTRA DOCUMENTATION BELOW FOR DEPEN TODO
 
 ###############################################################################
 # VARIABLES
 ###############################################################################
 # Declaring variables for frequently used parameters
 set $mod Mod4 
-set $rofitheme ~/Documents/gitclones/rofi-collection/nord/nord.rasi
-set $myterm tilix #terminal
+set $rofitheme ~/Documents/GITCLONES/rofi-collection/nord/nord.rasi
+set $myterm alacritty #terminal
 set $mybrowser qutebrowser #browser
-set $mylauncher rofi -show drun -theme material  #program launcher eg dmenu or rofi
-set $myrun rofi -show run -theme material
-set $myalttab rofi -show window -theme material
+set $mylauncher rofi -show drun -dpi 200 -theme material  #program launcher eg dmenu or rofi
+set $myrun rofi -show run -dpi 200 -theme material
+set $myalttab rofi -show window -dpi 200 -theme material
 #set $wallpaper_folder ~/Pictures/Wallpapers/wallpapers/
 
 ###############################################################################
@@ -34,9 +34,6 @@ bindsym $mod+Shift+q kill
 
 # start launcher eg rofi (a program launcher)
 bindsym $mod+space exec $mylauncher
-# There also is the (new) i3-dmenu-desktop which only displays applications
-# shipping a .desktop file. It is a wrapper around dmenu, so you need that
-# installed.
 # bindsym $mod+d exec --no-startup-id i3-dmenu-desktop
 
 #start run a gui to run a command
@@ -50,6 +47,7 @@ bindsym $mod+u exec $mybrowser https://ufora.ugent.be/d2l/home
 
 #toggle tilix in quake mode
 bindsym $mod+Shift+z exec tilix --quake 
+#ps guake is a better alternative just need to update some stuff
 
 ###############################################################################
 # PROGRAM BINDINGS
@@ -58,7 +56,7 @@ bindsym $mod+Shift+z exec tilix --quake
 bindsym $mod+Shift+Return exec $mybrowser
 #start terminal
 bindsym $mod+Return exec $myterm
-
+#TODO expand + workspace specific
 
 
 ###############################################################################
@@ -98,11 +96,18 @@ bindsym $mod+a focus parent
 # focus the child container
 #bindsym $mod+d focus child
 
+
+bindsym XF86MonBrightnessUp exec bash ~/scripts/brightness.sh + eDP-1
+bindsym XF86MonBrightnessDown exec bash ~/scripts/brightness.sh - eDP-1
+#bindsym XF86MonBrightnessDown exec tilix
+
+
 ###############################################################################
 # DEFINING WORKSPACES
 ###############################################################################
 # Define names for default workspaces for which we configure key bindings later on.
 # We use variables to avoid repeating the names in multiple places.
+#TODO naming and icons
 set $ws1 "1"
 set $ws2 "2"
 set $ws3 "3"
@@ -145,37 +150,46 @@ bindsym $mod+Shift+0 move container to workspace $ws10
 ###############################################################################
 # SCRATCHPAD MANAGEMENT
 ###############################################################################
+#TODO exapnd
+
 # Make the currently focused window a scratchpad
 bindsym $mod+Ctrl+m move scratchpad
 
 # Show the first scratchpad window
 bindsym $mod+Ctrl+a scratchpad show
 
-# show specific windows
+# show tilix
 bindsym $mod+Ctrl+z [class="Tilix"] scratchpad show
 
-# show specific windows
+# show spotify
 bindsym $mod+Ctrl+s [class="Spotify"] scratchpad show
 
-# show specific windows
+# show foss vscode
 bindsym $mod+Ctrl+c [class="VSCodium"] scratchpad show
 
-# show specific windows
+# show firefox
 bindsym $mod+Ctrl+f [class="firefox"] scratchpad show
 
-# show specific windows
+# show discord
 bindsym $mod+Ctrl+d [class="discord"] scratchpad show
 
-# show specific windows
+# show show notes
 bindsym $mod+Ctrl+n [class="Notes"] scratchpad show
 
-# show specific windows
+# show messenger client
 bindsym $mod+Ctrl+l [class="Caprine"] scratchpad show
 
-# show specific windows
+# show mattermost
 bindsym $mod+Ctrl+k [class="Mattermost"] scratchpad show
 
+#show emacs
 bindsym $mod+Ctrl+v [class="Emacs"] scratchpad show
+
+#show pomotroid
+bindsym $mod+Ctrl+t [class="pomotroid"] scratchpad show
+
+#show clock
+bindsym $mod+Ctrl+i [class="Org.gnome.clocks"] scratchpad show
 
 
 ###############################################################################
@@ -186,7 +200,7 @@ bindsym $mod+Shift+c reload
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym $mod+Shift+r restart
 # exit i3 (logs you out of your X session)
-bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
+bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You DUCK pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, I LOVE DUCKS' 'i3-msg exit'"
 
 
 ###############################################################################
@@ -261,8 +275,8 @@ bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOU
 ###############################################################################
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
-font pango:hack 13 #github nerd fonts hack
-
+font pango:hack 19 #github nerd fonts hack
+#TODO
 
 
 ###############################################################################
@@ -270,9 +284,9 @@ font pango:hack 13 #github nerd fonts hack
 ###############################################################################
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
-#bar {
-#       #status_command i3status
-#}
+bar {
+       #status_command i3status
+}
 
 ###############################################################################
 # STARTUP
@@ -282,17 +296,18 @@ exec_always --no-startup-id picom -c -f -n
 # xss-lock grabs a logind suspend inhibit lock and will use i3lock to lock the
 # screen before suspend. Use loginctl lock-session to lock your screen.
 exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
-
+#TODO:NW
 # NetworkManager is the most popular way to manage wireless networks on Linux,
 # and nm-applet is a desktop environment-independent system tray GUI for it.
 exec --no-startup-id nm-applet
-#exec nitrogen --restore
+exec nitrogen --restore
 
 #exec feh --bg-scale --randomize $wallpaper_folder
-
+exec nitrogen --restore
 exec --no-startup-id Blueman-manager
 exec --no-startup-id powerkit
-exec .  ~/polybar-collection/launch.sh
+#exec .  ~/polybar-collection/launch.sh
+#not in use rn
 ###############################################################################
 # DOCUMENTATION
 ###############################################################################
@@ -300,9 +315,9 @@ exec .  ~/polybar-collection/launch.sh
 #USED SOFTWARE:
 #       wallpaper drawer : nitrogen
 #       compositor : picom 
-#       power managment : xfce power managment Alternativily you can use p
+#       power managment : powerkit
 #       bluetooth manager : blueman
-#       
+#       TODO
 #
 #
 #
