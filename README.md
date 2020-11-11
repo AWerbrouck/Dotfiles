@@ -1,5 +1,5 @@
 # Dotfiles
-
+USE AT OWN RISK, I still have to make shure things are synced properly, Still a noob ;)
 # Dependencies
 	polybar https://github.com/polybar/polybar
 	polyar collection nord theme https://github.com/Murzchnvok/polybar-collection
