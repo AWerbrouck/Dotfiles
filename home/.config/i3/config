@@ -14,13 +14,14 @@
 # VARIABLES
 ###############################################################################
 # Declaring variables for frequently used parameters
-set $mod Mod4 
+set $mod Mod4
+set $sup Mod1
 set $rofitheme ~/Documents/GITCLONES/rofi-collection/nord/nord.rasi
 set $myterm alacritty #terminal
 set $mybrowser qutebrowser #browser
-set $mylauncher rofi -show drun -dpi 200 -theme material  #program launcher eg dmenu or rofi
-set $myrun rofi -show run -dpi 200 -theme material
-set $myalttab rofi -show window -dpi 200 -theme material
+set $mylauncher rofi -show drun -dpi 200 -theme dracula  #program launcher eg dmenu or rofi
+set $myrun rofi -show run -dpi 200 -theme dracula
+set $myalttab rofi -show window -dpi 200 -theme dracula
 #set $wallpaper_folder ~/Pictures/Wallpapers/wallpapers/
 
 ###############################################################################
@@ -34,7 +35,7 @@ bindsym $mod+Shift+q kill
 
 # start launcher eg rofi (a program launcher)
 bindsym $mod+space exec $mylauncher
-# bindsym $mod+d exec --no-startup-id i3-dmenu-desktop
+bindsym $mod+d exec --no-startup-id i3-dmenu-desktop
 
 #start run a gui to run a command
 bindsym $mod+Ctrl+space exec $myrun
@@ -56,6 +57,13 @@ bindsym $mod+Shift+z exec tilix --quake
 bindsym $mod+Shift+Return exec $mybrowser
 #start terminal
 bindsym $mod+Return exec $myterm
+#start emacs
+bindsym $sup+Ctrl+e exec emacs
+#start vim
+bindsym $sup+Ctrl+v exec st-256color
+
+
+
 #TODO expand + workspace specific
 
 
@@ -152,6 +160,13 @@ bindsym $mod+Shift+0 move container to workspace $ws10
 ###############################################################################
 #TODO exapnd
 
+
+#
+# Scratchpad keybindings, for a specific window mod + controll + [key]
+# **most keys are the first letter of the program or of the general group eg "c" for "vscode"
+#
+
+
 # Make the currently focused window a scratchpad
 bindsym $mod+Ctrl+m move scratchpad
 
@@ -159,12 +174,13 @@ bindsym $mod+Ctrl+m move scratchpad
 bindsym $mod+Ctrl+a scratchpad show
 
 # show tilix
-bindsym $mod+Ctrl+z [class="Tilix"] scratchpad show
+bindsym $mod+Ctrl+z [class="Alacritty"] scratchpad show
 
 # show spotify
 bindsym $mod+Ctrl+s [class="Spotify"] scratchpad show
 
-# show foss vscode
+# show vscodeium
+# a community version of vscode without the mc telemetry
 bindsym $mod+Ctrl+c [class="VSCodium"] scratchpad show
 
 # show firefox
@@ -180,16 +196,25 @@ bindsym $mod+Ctrl+n [class="Notes"] scratchpad show
 bindsym $mod+Ctrl+l [class="Caprine"] scratchpad show
 
 # show mattermost
+# foss slack
 bindsym $mod+Ctrl+k [class="Mattermost"] scratchpad show
 
-#show emacs
+# show emacs
 bindsym $mod+Ctrl+v [class="Emacs"] scratchpad show
 
-#show pomotroid
+# show pomotroid
+# a pomodoro timer gui
 bindsym $mod+Ctrl+t [class="pomotroid"] scratchpad show
 
-#show clock
+# show clock
 bindsym $mod+Ctrl+i [class="Org.gnome.clocks"] scratchpad show
+
+bindsym $mod+Ctrl+b [class="VirtualBox Machine"] scratchpad show
+
+
+bindsym $mod+Ctrl+j [class="Pavucontrol"] scratchpad show
+
+
 
 
 ###############################################################################
@@ -251,7 +276,7 @@ bindsym $mod+f fullscreen toggle
 # change container layout (stacked, tabbed, toggle split)
 bindsym $mod+s layout stacking
 bindsym $mod+w layout tabbed
-bindsym $mod+e layout toggle split
+#LASS(STRING) = "st-256color", "st-256color"
 
 # toggle tiling / floating
 bindsym $mod+Shift+space floating toggle
@@ -270,6 +295,13 @@ bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT
 bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -10% && $refresh_i3status
 bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && $refresh_i3status
 bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3status
+# Use playerctl to pause,play,... media
+bindsym XF86AudioPause exec --no-startup-id playerctl play-pause
+bindsym XF86AudioPlay exec --no-startup-id playerctl play-pause
+bindsym XF86AudioNext exec --no-startup-id playerctl next
+bindsym XF86AudioPrev exec --no-startup-id playerctl previous
+
+
 ###############################################################################
 # COLORS AND FONTS
 ###############################################################################
@@ -278,16 +310,30 @@ bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOU
 font pango:hack 19 #github nerd fonts hack
 #TODO
 
+#class                 border  bground text    indicator child_border
+client.focused          #6272A4 #6272A4 #F8F8F2 #6272A4   #6272A4
+client.focused_inactive #44475A #44475A #F8F8F2 #44475A   #44475A
+client.unfocused        #282A36 #282A36 #BFBFBF #282A36   #282A36
+client.urgent           #44475A #FF5555 #F8F8F2 #FF5555   #FF5555
+client.placeholder      #282A36 #282A36 #F8F8F2 #282A36   #282A36
 
+client.background       #F8F8F2
 ###############################################################################
 # I3 BAR
 ###############################################################################
-# Start i3bar to display a workspace bar (plus the system information i3status
-# finds out, if available)
 bar {
-       #status_command i3status
-}
+  colors {
+    background #282A36
+    statusline #F8F8F2
+    separator  #44475A
 
+    focused_workspace  #44475A #44475A #F8F8F2
+    active_workspace   #282A36 #44475A #F8F8F2
+    inactive_workspace #282A36 #282A36 #BFBFBF
+    urgent_workspace   #FF5555 #FF5555 #F8F8F2
+    binding_mode       #FF5555 #FF5555 #F8F8F2
+  }
+}
 ###############################################################################
 # STARTUP
 ###############################################################################
@@ -306,7 +352,7 @@ exec nitrogen --restore
 exec nitrogen --restore
 exec --no-startup-id Blueman-manager
 exec --no-startup-id powerkit
-#exec .  ~/polybar-collection/launch.sh
+exec .  ~/.config/polybar/launch.sh
 #not in use rn
 ###############################################################################
 # DOCUMENTATION
