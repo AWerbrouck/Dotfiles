@@ -1,0 +1,5 @@
+#!/bin/env bash 
+        killall polybar
+        nohup ~/.config/polybar/launch.sh &>/dev/null &
+
+

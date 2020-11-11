@@ -1,0 +1,11 @@
+#!/bin/env bash
+#flaunch () {
+#    if [ $1 = "polybar" ]
+#    then  
+#        killall polybar
+#        nohup ~/.config/polybar/launch.sh &>/dev/null &
+#    fi
+#    #if [ $1 = "coms" ]
+#}
+killall polybar
+
