@@ -22,3 +22,4 @@ USE AT OWN RISK
 	vscodium
 	spacemacs
 	or doomemacs
+	https://github.com/AWerbrouck/Dotfiles/blob/main/home/.config/i3/config
